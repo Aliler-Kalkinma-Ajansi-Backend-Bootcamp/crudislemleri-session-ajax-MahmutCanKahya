@@ -37,7 +37,10 @@ namespace ECommerce.Business.Concrete
         {
             return _productDal.GetAll();
         }
-
+        public ICollection<Product> GetAllForApi()
+        {
+            return _productDal.GetList();
+        }
         public void Insert(Product entity)
         {
             _productDal.Add(entity);

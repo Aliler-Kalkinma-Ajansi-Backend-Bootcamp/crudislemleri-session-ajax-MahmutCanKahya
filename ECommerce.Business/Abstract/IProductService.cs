@@ -7,5 +7,7 @@ namespace ECommerce.Business.Abstract
 {
     public interface IProductService:IBaseService<Product>
     {
+        public ICollection<Product> GetAllForApi();
+
     }
 }

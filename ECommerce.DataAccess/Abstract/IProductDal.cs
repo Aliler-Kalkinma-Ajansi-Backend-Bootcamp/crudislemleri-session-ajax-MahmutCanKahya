@@ -10,5 +10,6 @@ namespace ECommerce.DataAccess.Abstract
     {
         public ICollection<Product> GetAll();
         public Product Get(int ProdcutId);
+
     }
 }

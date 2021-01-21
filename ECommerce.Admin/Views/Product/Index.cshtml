@@ -1,0 +1,112 @@
+﻿@model IEnumerable<ECommerce.Entities.Concrete.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3 class="justify-content-center">
+                            Products
+                        </h3>
+                    </div>
+                    <div>
+                        <a asp-controller="Product" asp-action="Insert" class="btn btn-rounded btn-info pull-right">New Prodcut Add</a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="card-body">
+                <div id="example2_wrapper" class="overflow-auto table table-striped dataTable dtr-inline collapsed">
+                    <div class="row">
+                        <div class="col-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable dtr-inline" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                        <th>@Html.DisplayNameFor(model => model.ProductImages)</th>
+                                        <th>Category</th>
+                                        <th>Sub Category</th>
+                                        <th>Sub Sub Category</th>
+                                        <th>@Html.DisplayNameFor(model => model.Brand.Name)</th>
+                                        <th>@Html.DisplayNameFor(model => model.IsActive)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Description)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Discount)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Price)</th>
+                                        <th>@Html.DisplayNameFor(model => model.Stock)</th>
+                                        <th>Ayarlar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var product in Model)
+                                    {
+                                        string ProductImage = product.ProductImages.Count == 0? "statics/no_product.jpg" : product.ProductImages.FirstOrDefault().Path;
+                                    <tr>
+                                        <td>
+                                            @product.Name
+                                        </td>
+                                        <td>
+                                            <img src="~/images/@ProductImage"
+                                                 class="rounded-circle"
+                                                 height="40" width="40"
+                                                 asp-append-version="true" />
+                                        </td>
+                                        <td>
+                                            @product.Category.Parent.Parent.Name
+                                        </td>
+                                        <td>
+                                            @product.Category.Parent.Name
+                                        </td>
+                                        <td>
+                                            @product.Category.Name
+                                        </td>
+                                        <td>
+                                            @product.Brand.Name
+                                        </td>
+                                        <td>
+                                            <div class="custom-control custom-switch">
+                                                <input type="checkbox" class="custom-control-input" asp-for="@product.IsActive" disabled>
+                                                <label class="custom-control-label" asp-for="@product.IsActive">@(product.IsActive?"Active":"Inactive")</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            @product.Description
+                                        </td>
+                                        <td>
+                                            @product.Discount
+                                        </td>
+                                        <td>
+                                            @product.Price
+                                        </td>
+                                        <td>
+                                            @product.Stock
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-sm btn-danger" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">SİL</a>
+                                            <a class="btn btn-sm btn-success" asp-controller="Product" asp-action="Insert" asp-route-ProductId="@product.Id">Güncelle</a>
+                                        </td>
+
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#example2').DataTable();
+        });
+    </script>
+}
